@@ -8,9 +8,9 @@ This project focuses on conducting a basic climate analysis and data exploration
 
 ## Images
 
-![Pandas Plotting with Matplotlib-Precipitation](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/77188e58-279f-46f4-baae-9b6683296433)
-![summary statistics for the precipitation-pandas](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/1c1b7840-4558-4604-87d2-d19bf921034b)
-![last 12 mo of temp observation](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/b9ff3873-d332-482a-b9cd-5bc0598a65fe)
+![Pandas Plotting with Matplotlib-Precipitation](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/77188e58-279f-46f4-baae-9b6683296433) <br>
+![summary statistics for the precipitation-pandas](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/1c1b7840-4558-4604-87d2-d19bf921034b) <br>
+![last 12 mo of temp observation](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/b9ff3873-d332-482a-b9cd-5bc0598a65fe) <br>
 
 
 ## Table of Contents
