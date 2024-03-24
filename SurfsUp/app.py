@@ -1,4 +1,4 @@
-# Import the dependencies.
+## Import the dependencies.
 
 import numpy as np
 from flask import Flask, jsonify
@@ -6,33 +6,40 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.automap import automap_base
 
+
+
+
 #################################################
 # Database Setup
 #################################################
 engine = create_engine("sqlite:///Resources/hawaii.sqlite")
 
-# reflect an existing database into a new model
+## reflect an existing database into a new model
 Base = automap_base()
 
-# reflect the tables
+## reflect the tables
 Base.prepare(engine, reflect=True)
 
-# Save references to each table
+## Save references to each table
 Measurement = Base.classes.measurement
 Station = Base.classes.station
 
-# Create our session (link) from Python to the DB
-session = Session(engine)  
+## Create our session (link) from Python to the DB
+session = Session(engine) 
+
+
+
 
 #################################################
-# Flask Setup
+## Flask Setup
 #################################################
 app = Flask(__name__)
 
 
 
+
 #################################################
-# Flask Routes
+## Flask Routes
 #################################################
 @app.route("/")
 def welcome():
@@ -112,6 +119,10 @@ def temp_start(start):
     temperature_stats = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
                             filter(Measurement.date >= start).all()
 
+    # temperature_stats = session.query(np.min(Measurement.tobs),
+    #                                 np.avg(Measurement.tobs),
+    #                                 np.max(Measurement.tobs)).filter(Measurement.date >= start).all()
+
     session.close()
 
     # Convert list of tuples into normal list
@@ -126,8 +137,14 @@ def temp_range(start, end):
     session = Session(engine)
 
     # Query for the minimum, average, and maximum temperatures for a specified start-end range
-    temperature_stats = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
-                            filter(Measurement.date >= start).filter(Measurement.date <= end).all()
+    # temperature_stats = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
+    #                         filter(Measurement.date >= start).filter(Measurement.date <= end).all()
+
+    temperature_stats = session.query(
+    np.min(Measurement.tobs),
+    np.avg(Measurement.tobs),
+    np.max(Measurement.tobs)
+).filter(Measurement.date >= start).all()
 
     session.close()
 
