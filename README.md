@@ -14,12 +14,12 @@ This project focuses on conducting a basic climate analysis and data exploration
 ![last 12 mo of temp observation](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/b9ff3873-d332-482a-b9cd-5bc0598a65fe) <br>
 
 ### APP
-![flask app website results](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/423d92bb-274e-4a1d-84f4-91b39657dc28)
-![precipitation](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/4d5bf542-281c-4dc1-a3db-58569f132a8b)
-![stations](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/448dab89-3d38-4810-82b8-0d6311abf186)
-![tobs](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/ba27ff4b-c236-49f1-8e78-07d6fba43a5a)
-![start date](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/30ff90c5-5002-441c-9ed2-f243e965d0d4)
-![start-end](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/d0294831-fd94-4b21-bab0-56ecaf74f2ea)
+![flask app website results](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/423d92bb-274e-4a1d-84f4-91b39657dc28)<br>
+![precipitation](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/4d5bf542-281c-4dc1-a3db-58569f132a8b)<br>
+![stations](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/448dab89-3d38-4810-82b8-0d6311abf186)<br>
+![tobs](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/ba27ff4b-c236-49f1-8e78-07d6fba43a5a)<br>
+![start date](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/30ff90c5-5002-441c-9ed2-f243e965d0d4)<br>
+![start-end](https://github.com/teelam1910/sqlalchemy-analysis/assets/132629216/d0294831-fd94-4b21-bab0-56ecaf74f2ea)<br>
 
 
 ## Table of Contents
