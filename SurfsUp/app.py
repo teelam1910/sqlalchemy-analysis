@@ -41,6 +41,8 @@ app = Flask(__name__)
 #################################################
 ## Flask Routes
 #################################################
+
+#1 (/)
 @app.route("/")
 def welcome():
     """List all available api routes."""
@@ -53,12 +55,13 @@ def welcome():
         f"/api/v1.0/&lt;start&gt;/&lt;end&gt;<br/>"
     )
 
+#2 (/api/v1.0/precipitation)
 @app.route("/api/v1.0/precipitation")
 def precipitation():
-    """Return the JSON representation of your dictionary."""
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
+    """Return the JSON representation of your dictionary."""
     # Query for the dates and precipitation values for the last 12 months
     last_year_precipitation = session.query(Measurement.date, Measurement.prcp).\
                                 filter(Measurement.date >= '2016-08-23').all()
@@ -70,12 +73,14 @@ def precipitation():
 
     return jsonify(precipitation_data)
 
+
+#3 (/api/v1.0/stations)
 @app.route("/api/v1.0/stations")
 def stations():
-    """Return a JSON list of stations from the dataset."""
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
+    """Return a JSON list of stations from the dataset."""
     # Query for the stations
     stations_list = session.query(Station.station).all()
 
@@ -86,16 +91,18 @@ def stations():
 
     return jsonify(stations_list)
 
+
+#4 (/api/v1.0/tobs)
 @app.route("/api/v1.0/tobs")
 def tobs():
-    """Return a JSON list of temperature observations (TOBS) for the previous year."""
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
+    """Return a JSON list of temperature observations (TOBS) for the previous year."""
     # Query for the most active station for the last year of temperature data
     most_active_station = session.query(Measurement.station).\
-                            group_by(Measurement.station).\
-                            order_by(func.count(Measurement.station).desc()).first()[0]
+                        group_by(Measurement.station).\
+                        order_by(Measurement.station.desc()).first()[0]
 
     # Query for the dates and temperature observations for the most active station for the last year of data
     tobs_data = session.query(Measurement.date, Measurement.tobs).\
@@ -109,49 +116,66 @@ def tobs():
 
     return jsonify(tobs_list)
 
+
+
+
+# #5 part 1 (/api/v1.0/<start>)
 @app.route("/api/v1.0/<start>")
-def temp_start(start):
-    """Return a JSON list of the minimum temperature, the average temperature, and the maximum temperature for a specified start date."""
-    # Create our session (link) from Python to the DB
+def temperature_stats_start(start):
     session = Session(engine)
-
-    # Query for the minimum, average, and maximum temperatures for a specified start date
-    temperature_stats = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
-                            filter(Measurement.date >= start).all()
-
-    # temperature_stats = session.query(np.min(Measurement.tobs),
-    #                                 np.avg(Measurement.tobs),
-    #                                 np.max(Measurement.tobs)).filter(Measurement.date >= start).all()
-
-    session.close()
-
-    # Convert list of tuples into normal list
-    temp_data = list(np.ravel(temperature_stats))
-
-    return jsonify(temp_data)
-
-@app.route("/api/v1.0/<start>/<end>")
-def temp_range(start, end):
-    """Return a JSON list of the minimum temperature, the average temperature, and the maximum temperature for a specified start-end range."""
-    # Create our session (link) from Python to the DB
-    session = Session(engine)
-
-    # Query for the minimum, average, and maximum temperatures for a specified start-end range
-    # temperature_stats = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
-    #                         filter(Measurement.date >= start).filter(Measurement.date <= end).all()
-
+    
+    # Query for temperature statistics
     temperature_stats = session.query(
-    np.min(Measurement.tobs),
-    np.avg(Measurement.tobs),
-    np.max(Measurement.tobs)
-).filter(Measurement.date >= start).all()
-
+        np.min(Measurement.tobs).label('min_temperature'),
+        np.mean(Measurement.tobs).label('avg_temperature'),
+        np.max(Measurement.tobs).label('max_temperature')
+    ).filter(Measurement.date >= start).all()
+    
+    # Close the session
     session.close()
+    
+    # Convert to a JSON format
+    result = {
+        "start_date": start,
+        "end_date": None,
+        "temperature_stats": [{
+            "min_temperature": stat.min_temperature,
+            "avg_temperature": stat.avg_temperature,
+            "max_temperature": stat.max_temperature
+        } for stat in temperature_stats]
+    }
+    
+    # Return the JSON response
+    return jsonify(result)
 
-    # Convert list of tuples into normal list
-    temp_data = list(np.ravel(temperature_stats))
 
-    return jsonify(temp_data)
-
+# #5 part 2 (/api/v1.0/<start>/<end>)
+@app.route("/api/v1.0/<start>/<end>")
+def temperature_stats_range(start, end):
+    session = Session(engine)
+    
+    # Query for temperature statistics within the specified range
+    temperature_stats = session.query(
+        np.min(Measurement.tobs).label('min_temperature'),
+        np.mean(Measurement.tobs).label('avg_temperature'),
+        np.max(Measurement.tobs).label('max_temperature')
+    ).filter(Measurement.date >= start, Measurement.date <= end).all()
+    
+    # Close the session
+    session.close()
+    
+    # Convert the results to a JSON format
+    result = {
+        "start_date": start,
+        "end_date": end,
+        "temperature_stats": [{
+            "min_temperature": stat.min_temperature,
+            "avg_temperature": stat.avg_temperature,
+            "max_temperature": stat.max_temperature
+        } for stat in temperature_stats]
+    }
+    
+    # Return the JSON response
+    return jsonify(result)
 if __name__ == '__main__':
     app.run(debug=True)
