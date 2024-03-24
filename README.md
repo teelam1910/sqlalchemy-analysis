@@ -4,7 +4,7 @@
 
 
 ## Description
-This project focuses on conducting a basic climate analysis and data exploration using Python and SQLAlchemy. SQLAlchemy ORM queries, Pandas, and Matplotlib will be utilized for analysis and visualization, followed by designing a Flask API based on the insights developed. The file is located in the directory 'Surfs Up' and is named climate_analysis.
+This project focuses on conducting a basic climate analysis and data exploration using Python and SQLAlchemy. SQLAlchemy ORM queries, Pandas, and Matplotlib will be utilized for analysis and visualization, followed by designing a Flask API based on the insights developed. The analysis and the application are situated within the 'Surfs Up' directory, where they are respectively named 'climate_analysis' and 'app.py'.
 
 ## Images
 
