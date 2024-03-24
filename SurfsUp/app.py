@@ -124,17 +124,16 @@ def tobs():
 def temperature_stats_start(start):
     session = Session(engine)
     
-    # Query for temperature statistics
+    # Query for temperature stats
     temperature_stats = session.query(
         np.min(Measurement.tobs).label('min_temperature'),
         np.mean(Measurement.tobs).label('avg_temperature'),
-        np.max(Measurement.tobs).label('max_temperature')
-    ).filter(Measurement.date >= start).all()
+        np.max(Measurement.tobs).label('max_temperature')).filter(Measurement.date >= start).all()
     
     # Close the session
     session.close()
     
-    # Convert to a JSON format
+    # Convert to JSON format
     result = {
         "start_date": start,
         "end_date": None,
@@ -154,17 +153,16 @@ def temperature_stats_start(start):
 def temperature_stats_range(start, end):
     session = Session(engine)
     
-    # Query for temperature statistics within the specified range
+    # Query for temperature stats within the specified range
     temperature_stats = session.query(
         np.min(Measurement.tobs).label('min_temperature'),
         np.mean(Measurement.tobs).label('avg_temperature'),
-        np.max(Measurement.tobs).label('max_temperature')
-    ).filter(Measurement.date >= start, Measurement.date <= end).all()
+        np.max(Measurement.tobs).label('max_temperature')).filter(Measurement.date >= start, Measurement.date <= end).all()
     
     # Close the session
     session.close()
     
-    # Convert the results to a JSON format
+    # Convert results to JSON format
     result = {
         "start_date": start,
         "end_date": end,
